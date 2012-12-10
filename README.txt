@@ -9,7 +9,9 @@ Written by JohnWrinkleCorn
 ***************************************************************************************************
 ***************************************************************************************************
 
-This is a 0 click solution to ripping DVD's, simply insert a DVD into your DVD drive and the program will rip automatically .
+This is a 0 click solution to ripping DVD's, simply insert a DVD into your DVD drive and the program will rip automatically . 
+
+It also collects the meta data for you!!
 
 
 It takes a few inital steps to setup but after that the program works like a charm
