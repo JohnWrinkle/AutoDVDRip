@@ -1,4 +1,4 @@
-AutoDVDRip V0.1
+AutoDVDRip V0.2
 Written by JohnWrinkleCorn
 
 ***************************************************************************************************
@@ -28,10 +28,15 @@ NOT FREE! SORRY! There is a free trial though, if anyone knows an open source ve
 4) NirCmd - http://www.nirsoft.net/utils/nircmd.html This will eject the cd at the end 
 
 5) Media Companion - http://mediacompanion.codeplex.com/
+- PLEASE CONFIGURE MEDIA COMPANION, MAKE SURE YOU CHECK THE BOX THAT SAYS "ENABLE MOVIE RENAMING" Under movie preferences 
 
 6) Right click AutoDVDRip.bat and click edit, this will open notepad, and follow the instructions in the comments
 
-
+// UPDATES 
+v.2
+- Now renames folder based on movie title, IE; Bernie (2012) , Wet Hot American Summer (2001)
+- Minor bug fixes
+- 
 //Notes & to do
 - Does not handle subtitles yet
 

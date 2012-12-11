@@ -5,7 +5,7 @@
 set DVDDrive=F:
 
 :: Where do you want to store the DVD rip? It will store the files here in a folder called rips"
-set localStorage=C:\Users\User\Videos\
+set localStorage=C:\Users\User\Videos
 
 :: Where is handbrake installed?
 set handBrakeInstall=C:\Program Files\Handbrake
@@ -18,7 +18,7 @@ set handbrakePreset=Normal
 set nirmCmdInstall=c:\Program Files\NirCmd
 
 :: Where is media companion installed?
-set mediaCompanionInstall=C:\Users\UserName\Desktop\MediaCompanion3.510b
+set mediaCompanionInstall=C:\Users\User\Desktop\MediaCompanion3.510b
 
 :: What is the name of your Media Companion Profile? 
 :: Here is a link on how to create a profile 
@@ -57,27 +57,30 @@ set externalMovies=D:\Movies\
 :: the file and folders
 %DVDDrive%
 for /f "tokens=1-5*" %%1 in ('vol') do (
-   set vol=%%6& goto done
+   set temp=%%6& goto done
 )
 :done
+
+:: This gets rid of the underscores
+set vol=%temp:_= %
 
 :: This navigates to the user's localStorage input 
 :: and creates a folder inside of it called Rips
 C:
-CD %localStorage%
+CD "%localStorage%"
 mkdir Rips
 
 :: this navigates to the Rips folder and creates a folder named afer the DVD title (vol is a variable)
-cd %localStorage%\Rips
-mkdir %vol%
+cd "%localStorage%\Rips"
+mkdir "%vol%"
 
 :: Navigates to where the user said they installed handbrake 
-CD %handBrakeInstall%
+CD "%handBrakeInstall%"
 
 :: this says the input (-i) is the DVDdrive and it will rip to the local storage rip folder, and will rip it 
 :: to the %vol% folder and name the movie %vol%.mp4 with whatever preset the user wants
 :: maybe always have subtitles? Look into this later
-handbrakecli -i %DVDDrive%/ -o %localStorage%\Rips\%vol%\%vol%.mp4 --preset="%handbrakePreset%" -f mp4 --main-feature
+handbrakecli -i %DVDDrive%/ -o "%localStorage%\Rips\%vol%\%vol%.mp4" --preset="%handbrakePreset%" -f mp4 --main-feature
 
 :: navigates to the nircmd install folder and opens the DVD drive
 :: I really like this because even though the program is still running, it tells the user it is now 
@@ -86,8 +89,27 @@ CD %nirmCmdInstall%
 nircmd.exe cdrom open %DVDDrive%
 
 :: This gets the meta info for the movie
-CD %mediaCompanionInstall%
+CD "%mediaCompanionInstall%"
 mc_com.exe -m -p %mediaCompanionProfile%
+
+cd "%localStorage%\Rips\%vol%"
+
+:: This gets the name of the mp4 file which is now properly formatted with a year
+for /f "delims=" %%a in ('dir /a:-d /b *.mp4') do (
+call set concat=%%concat%%%%a
+)
+
+:: This will take the full file name and get rid of the mp4
+:: I can probably just rename concat from the start to fullpath but i dont feel
+:: like breaking the code right now
+set fullpath= %concat%
+set withoutext=%fullpath:~0,-4%
+
+cd "%localStorage%\Rips\"
+
+:: Renames the folder 
+ren "%localStorage%\Rips\%vol%" "%withoutext%"
+pause
 
 :: This says hey is your external plugged in? if so move the file we made into the external harddrive
 :: Please note robocopy only works with windows vista and up
